@@ -13,7 +13,6 @@ process.on('uncaughtException', err => {
 // Setting up config file
 dotenv.config({path: 'backend/config/config.env'});
 
-
 // Connecting to database
 connectDatabase();
 

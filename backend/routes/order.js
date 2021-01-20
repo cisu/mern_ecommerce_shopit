@@ -20,4 +20,8 @@ router
   .route('/admin/orders/')
   .get(isAuthenticatedUser, authorizeRoles('admin'), allOrders);
 
+router
+  .route('/admin/order/:id')
+  .put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder);
+
 module.exports = router;
