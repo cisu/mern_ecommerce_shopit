@@ -16,7 +16,8 @@ const Range = createSliderWidthTooltip(Slider.Range);
 
 const Home = ({match}) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 100]);
+  const [price, setPrice] = useState([1, 1000]);
+  const [category, setCategory] = useState('')
 
   const alert = useAlert();
   const dispatch = useDispatch();
