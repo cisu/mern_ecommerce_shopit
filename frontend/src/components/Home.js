@@ -1,5 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Pagination from 'react-js-pagination';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 import MetaData from './layout/MetaData';
 import Products from './product/Product';
@@ -9,8 +11,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useAlert} from 'react-alert';
 import {getProducts} from '../actions/productActions';
 
+const {createSliderWidthTooltip} = Slider;
+const Range = createSliderWidthTooltip(Slider.Range);
+
 const Home = ({match}) => {
-  const [currentPage, setCurrentPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [price, setPrice] = useState([1, 100]);
 
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -26,8 +32,8 @@ const Home = ({match}) => {
       return alert.error(error);
     }
 
-    dispatch(getProducts(keyword, currentPage));
-  }, [dispatch, alert, error, keyword, currentPage]);
+    dispatch(getProducts(keyword, currentPage, price));
+  }, [dispatch, alert, error, keyword, currentPage, price]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
@@ -44,10 +50,40 @@ const Home = ({match}) => {
 
           <section id='products' className='container mt-5'>
             <div className='row'>
-              {products &&
-                products.map(product => (
+              {keyword ? (
+                <Fragment>
+                  <div className='col-6 col-md-3 mt-5 mb-5'>
+                    <div className='px-5'>
+                      <Range
+                        marks={{
+                          1: `$1`,
+                          1000: `$1000`,
+                        }}
+                        min={1}
+                        max={1000}
+                        defaultValue={[1, 1000]}
+                        tipFormatters={value => `$${value}`}
+                        tipProps={{
+                          placeholder: 'top',
+                          visible: true,
+                        }}
+                        value={price}
+                        onChange={price => setPrice(price)}
+                      />
+                    </div>
+                  </div>
+
+                  <col-6 className="col-md-9">
+                    <div className="row">
+                    products.map(product => (
                   <Products key={product.id} product={product} />
-                ))}
+                ))
+                    </div>
+                  </col-6>
+                </Fragment>
+              ) : (
+              
+              )}
             </div>
           </section>
 
