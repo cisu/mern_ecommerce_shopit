@@ -18,6 +18,7 @@ const Home = ({match}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([1, 1000]);
   const [category, setCategory] = useState('')
+  const [rating, setRating] = useState(0)
 
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Home = ({match}) => {
       return alert.error(error);
     }
 
-    dispatch(getProducts(keyword, currentPage, price));
+    dispatch(getProducts(keyword, currentPage, price, category , rating));
   }, [dispatch, alert, error, keyword, currentPage, price]);
 
   function setCurrentPageNo(pageNumber) {
